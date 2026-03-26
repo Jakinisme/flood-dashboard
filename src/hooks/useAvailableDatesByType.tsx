@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { onValue, ref } from "firebase/database";
 import { database } from "../services/Firebase";
-import { SOIL_RTDB_PATHS } from "../constants/soil";
+import { SOIL_RTDB_PATHS } from "../constants/data";
 
 type DataType = 'daily' | 'weekly' | 'monthly';
 

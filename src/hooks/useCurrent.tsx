@@ -7,7 +7,7 @@ import {
   SOIL_METRIC_CONFIG,
   SOIL_RTDB_PATHS,
   type SoilMetricKey,
-} from "../constants/soil";
+} from "../constants/data";
 import type { SoilMetricSnapshot } from "../utils/soil";
 import {
   METRIC_KEYS,

@@ -1,10 +1,10 @@
 export const SOIL_METRIC_CONFIG = {
-  moisture: {
-    label: "Soil Moisture",
+  humidity: {
+    label: "Relative Humidity",
     unit: "%",
     min: 0,
     max: 100,
-    color: "#8884d8",
+    color: "#174dffcb",
   },
   temperature: {
     label: "Temperature",
@@ -13,13 +13,20 @@ export const SOIL_METRIC_CONFIG = {
     max: 100,
     color: "#ffc658",
   },
-  light: {
-    label: "Light Intensity",
-    unit: "lux",
-    min: 1200,
-    max: 120000,
-    color: "#ff7300",
+  wind: {
+    label: "Wind Speed",
+    unit: "m/s",
+    min: 0,
+    max: 30,
+    color: "#baffff",
   },
+  rainfall : {
+    label: "Rainfall",
+    unit: "mm/ml",
+    min: 0,
+    max: 500,
+    color: "#00c49f",
+  }
 } as const;
 
 export type SoilMetricKey = keyof typeof SOIL_METRIC_CONFIG;

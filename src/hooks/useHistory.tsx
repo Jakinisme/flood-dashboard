@@ -5,7 +5,7 @@ import { database } from "../services/Firebase";
 
 import type { GraphData } from "../types/charts";
 
-import { SOIL_METRIC_CONFIG, SOIL_RTDB_PATHS } from "../constants/soil";
+import { SOIL_METRIC_CONFIG, SOIL_RTDB_PATHS } from "../constants/data";
 import {
   METRIC_KEYS,
   sanitizeSoilSnapshot,

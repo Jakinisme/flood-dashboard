@@ -1,7 +1,7 @@
 import {
   SOIL_METRIC_CONFIG,
   type SoilMetricKey,
-} from "../constants/soil";
+} from "../constants/data";
 
 export const METRIC_KEYS = Object.keys(
   SOIL_METRIC_CONFIG,

@@ -7,7 +7,7 @@ import StatusItem from './sections/StatusItem';
 import { useHistory } from '../../../hooks/useHistory';
 import { useAvailableDatesByType } from '../../../hooks/useAvailableDatesByType';
 
-import { SOIL_METRIC_CONFIG } from '../../../constants/soil';
+import { SOIL_METRIC_CONFIG } from '../../../constants/data';
 import { METRIC_KEYS } from '../../../utils/soil';
 
 import type { GaugeData } from '../../../types/charts';

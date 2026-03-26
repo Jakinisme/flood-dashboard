@@ -26,7 +26,7 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({
             <div className={styles.formSection}>
                 <div className={styles.contentContainer}>
                     <div className={styles.logo}>
-                        <span>TechAgro</span>
+                        <span>HYDROSENSE</span>
                     </div>
 
                     <h1 className={styles.title}>{title}</h1>
@@ -45,7 +45,7 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({
 
             <div className={styles.brandingSection}>
                 <div className={styles.brandingContent}>
-                    <img src={logoImage} alt="TechAgro Logo" className={styles.brandingLogo} />
+                    <img src={logoImage} alt="HYDROSENSE Logo" className={styles.brandingLogo} />
                 </div>
             </div>
         </div>
