@@ -1,35 +1,21 @@
 import { useEffect, useState } from "react";
 import { onValue, ref } from "firebase/database";
 import { database } from "../services/Firebase";
-import { SOIL_RTDB_PATHS } from "../constants/data";
+import { SENSOR_RTDB_PATHS } from "../constants/data";
 
-type DataType = 'daily' | 'weekly' | 'monthly';
-
-interface UseAvailableDatesByTypeResult {
+interface UseAvailableDatesResult {
   dates: string[];
   loading: boolean;
   error: string | null;
 }
 
-const getPathForDataType = (dataType: DataType): string => {
-  switch (dataType) {
-    case 'daily':
-      return SOIL_RTDB_PATHS.history;
-    case 'weekly':
-      return SOIL_RTDB_PATHS.weekly;
-    case 'monthly':
-      return SOIL_RTDB_PATHS.monthly;
-  }
-};
-
-export const useAvailableDatesByType = (dataType: DataType): UseAvailableDatesByTypeResult => {
+export const useAvailableDates = (): UseAvailableDatesResult => {
   const [dates, setDates] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const path = getPathForDataType(dataType);
-    const datesRef = ref(database, path);
+    const datesRef = ref(database, SENSOR_RTDB_PATHS.history);
 
     const unsubscribe = onValue(
       datesRef,
@@ -44,16 +30,10 @@ export const useAvailableDatesByType = (dataType: DataType): UseAvailableDatesBy
         }
 
         const dateKeys = Object.keys(rawData).filter((key) => {
-          return /^\d{2}-\d{2}-\d{4}$/.test(key);
+          return /^\d{4}-\d{2}-\d{2}$/.test(key);
         });
 
-        dateKeys.sort((a, b) => {
-          const [dayA, monthA, yearA] = a.split("-").map(Number);
-          const [dayB, monthB, yearB] = b.split("-").map(Number);
-          const dateA = new Date(yearA, monthA - 1, dayA);
-          const dateB = new Date(yearB, monthB - 1, dayB);
-          return dateB.getTime() - dateA.getTime();
-        });
+        dateKeys.sort((a, b) => b.localeCompare(a));
 
         setDates(dateKeys);
         setError(null);
@@ -68,7 +48,7 @@ export const useAvailableDatesByType = (dataType: DataType): UseAvailableDatesBy
     return () => {
       unsubscribe();
     };
-  }, [dataType]);
+  }, []);
 
   return {
     dates,
@@ -76,7 +56,3 @@ export const useAvailableDatesByType = (dataType: DataType): UseAvailableDatesBy
     error,
   };
 };
-
-
-
-

@@ -34,41 +34,6 @@
     background: #141820;
 }
 
-.dataTypeSelector {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.dataTypeLabel {
-    font-size: 0.95rem;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.9);
-    min-width: 80px;
-}
-
-.dataTypeSelect {
-    flex: 0 0 auto;
-    min-width: 150px;
-    padding: 0.6rem 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
-    background: #141820;
-    color: #ffffff;
-    font-size: 0.95rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.dataTypeSelect:hover {
-    border-color: rgba(255, 255, 255, 0.3);
-}
-
-.dataTypeSelect:focus {
-    outline: none;
-    border-color: #f0f0f0;
-}
-
 .dateSelector {
     display: flex;
     flex-direction: column;
@@ -115,38 +80,6 @@
     cursor: not-allowed;
 }
 
-.dateDivider {
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 0.85rem;
-}
-
-.dateInputWrapper {
-    display: flex;
-    gap: 0.5rem;
-    flex: 1;
-    min-width: 200px;
-}
-
-.dateInput {
-    flex: 1;
-    padding: 0.6rem 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
-    background: #141820;
-    color: #ffffff;
-    font-size: 0.95rem;
-    transition: all 0.2s ease;
-}
-
-.dateInput::placeholder {
-    color: rgba(255, 255, 255, 0.4);
-}
-
-.dateInput:focus {
-    outline: none;
-    border-color: #ffffff;
-}
-
 .clearDateButton {
     align-self: flex-start;
     padding: 0.4rem 1rem;
@@ -162,53 +95,6 @@
 .clearDateButton:hover {
     background: rgba(255, 72, 66, 0.2);
     border-color: rgba(255, 72, 66, 0.5);
-}
-
-.selectedDateLabel {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: #f5f5f5;
-}
-
-.selectedDateLabel strong {
-    color: #f5f5f5;
-}
-
-.filterButtons {
-    display: flex;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-}
-
-.filterButton {
-    padding: 0.6rem 1.5rem;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
-    background: rgba(17, 22, 35, 0.95);
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 0.95rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.filterButton:hover {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.3);
-    color: #ffffff;
-}
-
-.filterButton.active {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-color: #ffffff;
-    color: #ffffff;
-}
-
-.periodLabel {
-    margin: 0;
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.7);
-    font-style: italic;
 }
 
 .section {
@@ -236,64 +122,149 @@
     color: rgba(255, 255, 255, 0.6);
 }
 
-.statsGrid {
+/* Prediction Cards */
+.predictionsGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
 }
 
-.statCard {
+.predictionCard {
     padding: 1.5rem;
     border-radius: 12px;
     background: #141820;
-}
-
-.statCard h3 {
-    margin: 0 0 1rem 0;
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #ffffff;
-}
-
-.statContent {
+    border: 1px solid rgba(255, 255, 255, 0.06);
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-}
-
-.statItem {
-    display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 0.75rem 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    gap: 0.75rem;
+    transition: border-color 0.2s ease;
 }
 
-.statItem:last-child {
-    border-bottom: none;
+.predictionCard:hover {
+    border-color: rgba(255, 255, 255, 0.15);
 }
 
-.statLabel {
-    font-size: 0.95rem;
-    color: rgba(255, 255, 255, 0.8);
-}
-
-.statValue {
+.predictionTitle {
+    margin: 0;
     font-size: 1.1rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.predictionEmoji {
+    font-size: 2.5rem;
+    line-height: 1;
+}
+
+.predictionLabel {
+    margin: 0;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.85);
+    text-align: center;
+    line-height: 1.4;
+}
+
+.predictionMeta {
+    display: flex;
+    gap: 1.25rem;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.metaItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.metaLabel {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.metaValue {
+    font-size: 0.95rem;
     font-weight: 600;
     color: #ffffff;
 }
 
-.statValue.healthy {
-    color: #82ca9d;
+.riskBadge {
+    display: inline-block;
+    padding: 0.2rem 0.65rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #111;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
 }
 
-.statValue.diseased {
-    color: #ff4842;
+/* History Table */
+.historyTable {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
-.statValue.warning {
-    color: #ffc658;
+.tableTitle {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.tableWrapper {
+    overflow-x: auto;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.table th,
+.table td {
+    padding: 0.85rem 1rem;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.table th {
+    background: #141820;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.table td {
+    background: rgba(20, 24, 32, 0.6);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.table tbody tr {
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.table tbody tr:hover td {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.activeRow td {
+    background: rgba(102, 126, 234, 0.12) !important;
+    border-color: rgba(102, 126, 234, 0.2);
 }
 
 @media (max-width: 768px) {
@@ -301,8 +272,7 @@
         padding: 1.5rem 1rem;
     }
 
-    .statsGrid {
+    .predictionsGrid {
         grid-template-columns: 1fr;
     }
 }
-

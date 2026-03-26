@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { MdDashboard, MdHistory, MdLogout, MdCamera } from "react-icons/md";
+import { MdDashboard, MdHistory, MdLogout } from "react-icons/md";
 
 import Button from "../../ui/Button";
 import Profile from "../../ui/Profile/Profile";
@@ -15,11 +15,7 @@ const SideNav = () => {
       icon: <MdDashboard className={styles.icon} />,
       label: "Dashboard",
     },
-    {
-      path: "/camera",
-      icon: <MdCamera className={styles.icon} />,
-      label: "Live Cam",
-    },
+
     {
       path: "/history",
       icon: <MdHistory className={styles.icon} />,
@@ -30,7 +26,7 @@ const SideNav = () => {
   const handleLogout = async () => {
     const confirmed = window.confirm("Are you sure you want to logout?");
     if (!confirmed) return;
-    
+
     try {
       await logout();
     } catch (error) {

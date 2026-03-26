@@ -4,18 +4,18 @@ import { onValue, ref } from "firebase/database";
 import type { GaugeData, GraphData, GraphDataPoint } from "../types/charts";
 import { database } from "../services/Firebase";
 import {
-  SOIL_METRIC_CONFIG,
-  SOIL_RTDB_PATHS,
-  type SoilMetricKey,
+  SENSOR_METRIC_CONFIG,
+  SENSOR_RTDB_PATHS,
+  type SensorMetricKey,
 } from "../constants/data";
-import type { SoilMetricSnapshot } from "../utils/soil";
+import type { SensorMetricSnapshot } from "../utils/soil";
 import {
   METRIC_KEYS,
-  sanitizeSoilSnapshot,
+  sanitizeSensorSnapshot,
 } from "../utils/soil";
 
 interface UseCurrentResult {
-  current: SoilMetricSnapshot | null;
+  current: SensorMetricSnapshot | null;
   gauges: GaugeData[];
   graph: GraphData;
   loading: boolean;
@@ -25,34 +25,34 @@ interface UseCurrentResult {
 const EMPTY_GRAPH: GraphData = {
   data: [],
   dataKeys: METRIC_KEYS,
-  colors: METRIC_KEYS.map((key) => SOIL_METRIC_CONFIG[key].color),
+  colors: METRIC_KEYS.map((key) => SENSOR_METRIC_CONFIG[key].color),
 };
 
 const MAX_GRAPH_POINTS = 10;
 
 export const useCurrent = (): UseCurrentResult => {
-  const [current, setCurrent] = useState<SoilMetricSnapshot | null>(null);
+  const [current, setCurrent] = useState<SensorMetricSnapshot | null>(null);
   const [graphEntries, setGraphEntries] = useState<GraphDataPoint[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const currentRef = ref(database, SOIL_RTDB_PATHS.current);
+    const currentRef = ref(database, SENSOR_RTDB_PATHS.latest);
 
     const unsubscribe = onValue(
       currentRef,
       (snapshot) => {
-        const sanitized = sanitizeSoilSnapshot(snapshot.val());
+        const sanitized = sanitizeSensorSnapshot(snapshot.val());
         if (sanitized) {
           const pointTimestamp = Date.now();
 
-          const normalizedEntry: Record<SoilMetricKey, number> = {} as Record<
-            SoilMetricKey,
+          const normalizedEntry: Record<SensorMetricKey, number> = {} as Record<
+            SensorMetricKey,
             number
           >;
 
           METRIC_KEYS.forEach((key) => {
-            const { max } = SOIL_METRIC_CONFIG[key];
+            const { max } = SENSOR_METRIC_CONFIG[key];
             const value = (sanitized[key] / max) * 100;
             normalizedEntry[key] = Number.isFinite(value)
               ? Number(value.toFixed(2))
@@ -105,7 +105,7 @@ export const useCurrent = (): UseCurrentResult => {
             return nextEntries;
           });
 
-          const sanitizedWithCurrentTimestamp: SoilMetricSnapshot = {
+          const sanitizedWithCurrentTimestamp: SensorMetricSnapshot = {
             ...sanitized,
             timestamp: pointTimestamp,
           };
@@ -135,10 +135,10 @@ export const useCurrent = (): UseCurrentResult => {
     }
 
     return METRIC_KEYS.map((key) => ({
-      name: SOIL_METRIC_CONFIG[key].label,
+      name: SENSOR_METRIC_CONFIG[key].label,
       value: current[key],
-      maxValue: SOIL_METRIC_CONFIG[key].max,
-      color: SOIL_METRIC_CONFIG[key].color,
+      maxValue: SENSOR_METRIC_CONFIG[key].max,
+      color: SENSOR_METRIC_CONFIG[key].color,
     }));
   }, [current]);
 
@@ -150,7 +150,7 @@ export const useCurrent = (): UseCurrentResult => {
     return {
       data: graphEntries,
       dataKeys: METRIC_KEYS,
-      colors: METRIC_KEYS.map((key) => SOIL_METRIC_CONFIG[key].color),
+      colors: METRIC_KEYS.map((key) => SENSOR_METRIC_CONFIG[key].color),
     };
   }, [graphEntries]);
 
@@ -162,4 +162,3 @@ export const useCurrent = (): UseCurrentResult => {
     error,
   };
 };
-

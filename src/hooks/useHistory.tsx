@@ -5,33 +5,20 @@ import { database } from "../services/Firebase";
 
 import type { GraphData } from "../types/charts";
 
-import { SOIL_METRIC_CONFIG, SOIL_RTDB_PATHS } from "../constants/data";
+import { SENSOR_METRIC_CONFIG, SENSOR_RTDB_PATHS } from "../constants/data";
 import {
   METRIC_KEYS,
-  sanitizeSoilSnapshot,
-  type SoilMetricSnapshot,
+  sanitizeSensorSnapshot,
+  type SensorMetricSnapshot,
 } from "../utils/soil";
 
-type DataType = 'daily' | 'weekly' | 'monthly';
-
-const getPathForDataType = (dataType: DataType): string => {
-  switch (dataType) {
-    case 'daily':
-      return SOIL_RTDB_PATHS.history;
-    case 'weekly':
-      return SOIL_RTDB_PATHS.weekly;
-    case 'monthly':
-      return SOIL_RTDB_PATHS.monthly;
-  }
-};
-
-interface SoilHistoryEntry extends SoilMetricSnapshot {
+interface SensorHistoryEntry extends SensorMetricSnapshot {
   key: string;
   label: string;
 }
 
 interface UseHistoryResult {
-  history: SoilHistoryEntry[];
+  history: SensorHistoryEntry[];
   graph: GraphData;
   loading: boolean;
   error: string | null;
@@ -40,20 +27,19 @@ interface UseHistoryResult {
 const DEFAULT_GRAPH: GraphData = {
   data: [],
   dataKeys: METRIC_KEYS,
-  colors: METRIC_KEYS.map((key) => SOIL_METRIC_CONFIG[key].color),
+  colors: METRIC_KEYS.map((key) => SENSOR_METRIC_CONFIG[key].color),
 };
 
-export const useHistory = (selectedDate?: string, dataType: DataType = 'daily'): UseHistoryResult => {
-  const [history, setHistory] = useState<SoilHistoryEntry[]>([]);
+export const useHistory = (selectedDate?: string): UseHistoryResult => {
+  const [history, setHistory] = useState<SensorHistoryEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const basePath = getPathForDataType(dataType);
-    const path = selectedDate 
-      ? `${basePath}/${selectedDate}`
-      : basePath;
-    
+    const path = selectedDate
+      ? `${SENSOR_RTDB_PATHS.history}/${selectedDate}`
+      : SENSOR_RTDB_PATHS.history;
+
     const historyRef = ref(database, path);
 
     const unsubscribe = onValue(
@@ -68,21 +54,20 @@ export const useHistory = (selectedDate?: string, dataType: DataType = 'daily'):
           return;
         }
 
-        let entries: SoilHistoryEntry[] = [];
+        let entries: SensorHistoryEntry[] = [];
 
         if (selectedDate) {
-          const sanitized = sanitizeSoilSnapshot(rawData as Record<string, unknown>);
+          const sanitized = sanitizeSensorSnapshot(rawData as Record<string, unknown>);
 
           if (sanitized) {
-            const [day, month, year] = selectedDate.split("-").map(Number);
-            const date = new Date(year, month - 1, day);
-            
+            const date = new Date(selectedDate);
+
             entries.push({
               key: selectedDate,
-              label: date.toLocaleDateString('en-US', { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
+              label: date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
               }),
               ...sanitized,
               timestamp: sanitized.timestamp || date.getTime(),
@@ -90,25 +75,24 @@ export const useHistory = (selectedDate?: string, dataType: DataType = 'daily'):
           }
         } else {
           const rawHistory = rawData as Record<string, Record<string, unknown>> | null;
-          
+
           if (rawHistory) {
-            entries = Object.entries(rawHistory).reduce<SoilHistoryEntry[]>(
+            entries = Object.entries(rawHistory).reduce<SensorHistoryEntry[]>(
               (accumulator, [dateKey, value]) => {
-                if (!/^\d{2}-\d{2}-\d{4}$/.test(dateKey)) {
+                if (!/^\d{4}-\d{2}-\d{2}$/.test(dateKey)) {
                   return accumulator;
                 }
 
-                const sanitized = sanitizeSoilSnapshot(value);
+                const sanitized = sanitizeSensorSnapshot(value);
                 if (sanitized) {
-                  const [day, month, year] = dateKey.split("-").map(Number);
-                  const date = new Date(year, month - 1, day);
-                  
+                  const date = new Date(dateKey);
+
                   accumulator.push({
                     key: dateKey,
-                    label: date.toLocaleDateString('en-US', { 
-                      year: 'numeric', 
-                      month: 'long', 
-                      day: 'numeric' 
+                    label: date.toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
                     }),
                     ...sanitized,
                     timestamp: sanitized.timestamp || date.getTime(),
@@ -136,7 +120,7 @@ export const useHistory = (selectedDate?: string, dataType: DataType = 'daily'):
     return () => {
       unsubscribe();
     };
-  }, [selectedDate, dataType]);
+  }, [selectedDate]);
 
   const graph = useMemo<GraphData>(() => {
     if (!history.length) {
@@ -146,15 +130,17 @@ export const useHistory = (selectedDate?: string, dataType: DataType = 'daily'):
     const data = history.map((entry) => ({
       timestamp: entry.timestamp,
       label: entry.label,
-      moisture: entry.moisture,
+      humidity: entry.humidity,
+      rainfall_mm: entry.rainfall_mm,
       temperature: entry.temperature,
-      light: entry.light,
+      upstream_rain: entry.upstream_rain,
+      wind_speed: entry.wind_speed,
     }));
 
     return {
       data,
       dataKeys: METRIC_KEYS,
-      colors: METRIC_KEYS.map((key) => SOIL_METRIC_CONFIG[key].color),
+      colors: METRIC_KEYS.map((key) => SENSOR_METRIC_CONFIG[key].color),
     };
   }, [history]);
 
@@ -165,4 +151,3 @@ export const useHistory = (selectedDate?: string, dataType: DataType = 'daily'):
     error,
   };
 };
-

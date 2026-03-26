@@ -1,15 +1,15 @@
 import {
-  SOIL_METRIC_CONFIG,
-  type SoilMetricKey,
+  SENSOR_METRIC_CONFIG,
+  type SensorMetricKey,
 } from "../constants/data";
 
 export const METRIC_KEYS = Object.keys(
-  SOIL_METRIC_CONFIG,
-) as SoilMetricKey[];
+  SENSOR_METRIC_CONFIG,
+) as SensorMetricKey[];
 
-export type SoilMetrics = Record<SoilMetricKey, number>;
+export type SensorMetrics = Record<SensorMetricKey, number>;
 
-export interface SoilMetricSnapshot extends SoilMetrics {
+export interface SensorMetricSnapshot extends SensorMetrics {
   timestamp: number;
 }
 
@@ -26,9 +26,9 @@ export const toNumber = (value: unknown): number | null => {
 
 export const clampMetricValue = (
   value: number | null,
-  key: SoilMetricKey,
+  key: SensorMetricKey,
 ): number => {
-  const { min, max } = SOIL_METRIC_CONFIG[key];
+  const { min, max } = SENSOR_METRIC_CONFIG[key];
   if (value === null) {
     return min;
   }
@@ -41,9 +41,9 @@ export const clampMetricValue = (
   return value;
 };
 
-export const sanitizeSoilSnapshot = (
+export const sanitizeSensorSnapshot = (
   raw: Record<string, unknown> | null,
-): SoilMetricSnapshot | null => {
+): SensorMetricSnapshot | null => {
   if (!raw) {
     return null;
   }
@@ -56,7 +56,7 @@ export const sanitizeSoilSnapshot = (
       );
       return accumulator;
     },
-    {} as SoilMetrics,
+    {} as SensorMetrics,
   );
 
   const timestamp = toNumber(raw.timestamp) ?? Date.now();
@@ -66,9 +66,3 @@ export const sanitizeSoilSnapshot = (
     timestamp,
   };
 };
-
-
-
-
-
-
