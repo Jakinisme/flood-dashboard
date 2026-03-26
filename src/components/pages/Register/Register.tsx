@@ -90,7 +90,7 @@ const Register = () => {
   return (
     <AuthLayout
       title="Create an account"
-      subtitle="Start monitoring irrigation data and receive smarter alerts."
+      subtitle="Start monitoring floods data and receive smarter alerts."
       footerText="Already have an account?"
       footerLinkText="Log in"
       footerLinkTo="/login"

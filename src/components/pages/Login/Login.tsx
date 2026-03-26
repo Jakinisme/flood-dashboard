@@ -78,7 +78,7 @@ export default function Login() {
   return (
     <AuthLayout
       title="Welcome back"
-      subtitle="Sign in to access moisture insights and keep your crops on track."
+      subtitle="Sign in to access your dashboard and manage your flood data."
       footerText="New to Dashboard?"
       footerLinkText="Create an account"
       footerLinkTo="/register"
