@@ -4,10 +4,11 @@ import styles from './History.module.css';
 import Gauges from '../../ui/Gauges';
 
 import { usePredictionHistory } from '../../../hooks/usePredictionHistory';
+import { getRiskColor } from './section/riskColor';
 import { PREDICTION_SENSOR_CONFIG, PREDICTION_SENSOR_KEYS } from '../../../constants/data';
+import PredictionCard from './section/predCard';
 
 import type { GaugeData } from '../../../types/charts';
-import type { PredictionForecast } from '../../../hooks/usePredictionHistory';
 
 const formatDateForDisplay = (dateStr: string): string => {
     const date = new Date(dateStr);
@@ -17,43 +18,6 @@ const formatDateForDisplay = (dateStr: string): string => {
         day: 'numeric',
     });
 };
-
-const getRiskColor = (risk: string): string => {
-    switch (risk.toUpperCase()) {
-        case 'LOW': return '#82ca9d';
-        case 'MEDIUM': return '#ffc658';
-        case 'HIGH': return '#ff8042';
-        case 'CRITICAL': return '#ff4842';
-        default: return '#a0a0a0';
-    }
-};
-
-const PredictionCard = ({ title, data }: { title: string; data: PredictionForecast }) => (
-    <div className={styles.predictionCard}>
-        <h3 className={styles.predictionTitle}>{title}</h3>
-        <div className={styles.predictionEmoji}>{data.emoji}</div>
-        <p className={styles.predictionLabel}>{data.label}</p>
-        <div className={styles.predictionMeta}>
-            <div className={styles.metaItem}>
-                <span className={styles.metaLabel}>Risk</span>
-                <span
-                    className={styles.riskBadge}
-                    style={{ background: getRiskColor(data.risk) }}
-                >
-                    {data.risk}
-                </span>
-            </div>
-            <div className={styles.metaItem}>
-                <span className={styles.metaLabel}>Probability</span>
-                <span className={styles.metaValue}>{data.prob_pct}%</span>
-            </div>
-            <div className={styles.metaItem}>
-                <span className={styles.metaLabel}>Threshold</span>
-                <span className={styles.metaValue}>{data.threshold}</span>
-            </div>
-        </div>
-    </div>
-);
 
 const History = () => {
     const [selectedDate, setSelectedDate] = useState<string>('');

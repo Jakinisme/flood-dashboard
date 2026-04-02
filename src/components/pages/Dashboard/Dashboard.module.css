@@ -8,6 +8,17 @@
 .Gauges,
 .Graph {
   width: 100%;
-  box-sizing: border-box;
 }
 
+.predictionsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .predictionsGrid {
+    grid-template-columns: 1fr;
+  }
+}

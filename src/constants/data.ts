@@ -45,6 +45,7 @@ export const SENSOR_RTDB_PATHS = {
 } as const;
 
 export const PREDICTION_RTDB_PATHS = {
+  latest: "predictions/latest",
   history: "predictions/history",
 } as const;
 
