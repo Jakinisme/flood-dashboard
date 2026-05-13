@@ -171,16 +171,6 @@ const Settings = () => {
                             </div>
                         )}
                     </form>
-
-                    {/* ESP32 path hint */}
-                    <div className={styles.infoCard}>
-                        <span className={styles.infoIcon}>ℹ️</span>
-                        <p className={styles.infoText}>
-                            Credentials are stored at Firebase path <code>config/wifi</code>.
-                            Your ESP32 reads <code>ssid</code> and <code>password</code> fields on boot.
-                            No source code changes needed — just save here and reboot the device.
-                        </p>
-                    </div>
                 </div>
             </div>
         </main>
