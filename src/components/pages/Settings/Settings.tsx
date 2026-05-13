@@ -74,7 +74,7 @@ const Settings = () => {
 
             <div className={styles.card}>
                 <div className={styles.cardHeader}>
-                    <span className={styles.cardIcon}>📶</span>
+                    <span className={styles.cardIcon}></span>
                     <h2 className={styles.cardTitle}>WiFi Credentials</h2>
                 </div>
 
@@ -139,7 +139,7 @@ const Settings = () => {
                                     onClick={() => setShowPassword((v) => !v)}
                                     aria-label={showPassword ? "Hide password" : "Show password"}
                                 >
-                                    {showPassword ? "🙈" : "👁"}
+                                    {showPassword ? "Hide" : "Show"}
                                 </button>
                             </div>
                             <span className={styles.hint}>Leave blank for open (no password) networks.</span>
