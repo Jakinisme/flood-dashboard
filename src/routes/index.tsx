@@ -1,6 +1,7 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import Layout from "../components/layout/Layout";
 import Dashboard from "../components/pages/Dashboard/Dashboard";
+import Settings from "../components/pages/Settings";
 import History from "../components/pages/History/History";
 import Login from "../components/pages/Login";
 import Register from "../components/pages/Register";
@@ -26,6 +27,10 @@ export const router = createBrowserRouter([
         path: "history",
         element: <History />,
       },
+      {
+        path: "settings",
+        element: <Settings />,
+      }
     ],
   },
   {
