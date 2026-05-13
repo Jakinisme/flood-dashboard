@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { MdDashboard, MdHistory, MdLogout } from "react-icons/md";
+import { MdDashboard, MdHistory, MdLogout, MdSettings } from "react-icons/md";
 
 import Button from "../../ui/Button";
 import Profile from "../../ui/Profile/Profile";
@@ -21,6 +21,11 @@ const SideNav = () => {
       icon: <MdHistory className={styles.icon} />,
       label: "History",
     },
+    {
+      path: "/settings",
+      icon: <MdSettings className={styles.icon} />,
+      label: "Settings",
+    }
   ];
 
   const handleLogout = async () => {
