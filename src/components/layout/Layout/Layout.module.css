@@ -30,35 +30,101 @@
     box-sizing: border-box;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .Sidebar {
-        width: 240px;
-    }
-
-    .MainContent {
-        margin-left: 240px;
-        width: calc(100% - 240px);
-        padding: 20px;
-    }
+/* Hamburger button — hidden on desktop */
+.hamburger {
+    display: none;
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 1100;
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    background: rgba(20, 24, 32, 0.92);
+    backdrop-filter: blur(12px);
+    cursor: pointer;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 0;
+    transition: background 0.2s ease, border-color 0.2s ease;
 }
 
-@media (max-width: 480px) {
-    .Sidebar {
-        width: 100%;
-        max-width: 280px;
-        transform: translateX(-100%);
-        transition: transform 0.3s ease;
+.hamburger:hover {
+    background: rgba(30, 36, 50, 0.95);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.hamburgerLine {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: #ffffff;
+    border-radius: 2px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.hamburgerLine.hamburgerOpen:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.hamburgerLine.hamburgerOpen:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburgerLine.hamburgerOpen:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Overlay — only visible on mobile when sidebar is open */
+.overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(4px);
+    z-index: 999;
+    animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* ===== Tablet (≤ 768px) ===== */
+@media (max-width: 768px) {
+    .hamburger {
+        display: flex;
     }
 
-    .Sidebar.open {
+    .overlay {
+        display: block;
+    }
+
+    .Sidebar {
+        width: 280px;
+        transform: translateX(-100%);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .Sidebar.sidebarVisible {
         transform: translateX(0);
     }
 
     .MainContent {
         margin-left: 0;
         width: 100%;
-        padding: 16px;
+        padding: 72px 16px 24px;
     }
 }
 
+/* ===== Small mobile (≤ 480px) ===== */
+@media (max-width: 480px) {
+    .MainContent {
+        padding: 68px 12px 20px;
+        gap: 16px;
+    }
+}

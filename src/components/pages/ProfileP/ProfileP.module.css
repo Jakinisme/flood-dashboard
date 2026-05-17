@@ -187,7 +187,16 @@
     transform: translateY(-1px);
 }
 
+/* ===== Tablet (≤ 768px) ===== */
 @media (max-width: 768px) {
+    .main {
+        padding: 2rem 0;
+    }
+
+    .container {
+        width: 95%;
+    }
+
     .card {
         padding: 2rem;
         gap: 2rem;
@@ -206,6 +215,43 @@
     .buttonGroup,
     .actions {
         justify-content: center;
+    }
+}
+
+/* ===== Small mobile (≤ 480px) ===== */
+@media (max-width: 480px) {
+    .main {
+        padding: 1rem 0;
+    }
+
+    .container {
+        width: 100%;
+    }
+
+    .card {
+        padding: 1.5rem 1rem;
+        border-radius: 0;
+    }
+
+    .avatar {
+        width: 120px;
+        height: 120px;
+    }
+
+    .name {
+        font-size: 1.75rem;
+    }
+
+    .buttonGroup, 
+    .actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .primaryButton, 
+    .ghostButton {
+        width: 100%;
+        text-align: center;
     }
 }
 

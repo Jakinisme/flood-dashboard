@@ -300,3 +300,31 @@
         text-align: center;
     }
 }
+
+@media (max-width: 480px) {
+    .main {
+        padding: 1rem 0.5rem;
+    }
+
+    .cardHeader {
+        padding: 1rem;
+    }
+
+    .cardBody {
+        padding: 1rem;
+    }
+
+    .statusBanner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .statusTime {
+        margin-left: 0;
+    }
+
+    .title {
+        font-size: 1.5rem;
+    }
+}

@@ -205,6 +205,7 @@
   text-decoration: none;
 }
 
+/* ===== Tablet/Mobile (≤ 640px) ===== */
 @media (max-width: 640px) {
   .card {
     padding: 2rem 1.5rem;
@@ -212,5 +213,29 @@
 
   .title {
     font-size: 1.5rem;
+  }
+}
+
+/* ===== Small mobile (≤ 480px) ===== */
+@media (max-width: 480px) {
+  .page {
+    padding: 1rem;
+  }
+
+  .card {
+    padding: 1.5rem 1rem;
+    border-radius: 12px;
+  }
+
+  .title {
+    font-size: 1.35rem;
+  }
+
+  .content {
+    padding: 1rem;
+  }
+
+  .icon {
+    font-size: 2rem;
   }
 }

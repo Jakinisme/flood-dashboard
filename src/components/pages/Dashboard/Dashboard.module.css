@@ -17,8 +17,21 @@
   width: 100%;
 }
 
+/* ===== Tablet (≤ 768px) ===== */
 @media (max-width: 768px) {
+  .Dashboard {
+    gap: 16px;
+  }
+
   .predictionsGrid {
     grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+/* ===== Small mobile (≤ 480px) ===== */
+@media (max-width: 480px) {
+  .Dashboard {
+    gap: 12px;
   }
 }
